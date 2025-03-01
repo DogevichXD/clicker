@@ -7,10 +7,50 @@ P = 100
 LVL = 1
 MonsterLVL= 50
 Money = 100
+STR = 0
+DECS = 0 
+INT = 0 
+
+def clear_window():
+    for widget in window.winfo_children():
+        if not isinstance(widget, tk.Menu):
+            widget.destroy()
 
 def gear_clicked():
-    gear = Tk()
-    gear.title("Экипировка")
+    clear_window()
+
+def ability_clicked():
+    global STR
+    global DECS
+    global INT
+    clear_window()
+    labelSTR = Label(window,text="СИЛА")
+    labelSTR.grid(column=0,row=0)
+    labelDECS = Label(window,text="ЛОВКОСТЬ")
+    labelDECS.grid(column=0,row=1)
+    labelINT = Label(window,text="ИНТЕЛЕКТ")
+    labelINT.grid(column=0,row=2)
+    STR = Button(text="+",command=STR_btn)
+    STR.grid(column=1,row=0)
+    DECS = Button(text="+",command=DECS_btn)
+    DECS.grid(column=1,row=1)
+    INT = Button(text="+",command=INT_btn)
+    INT.grid(column=1,row=2)
+    
+def STR_btn():
+    LVL-=1
+    STR+=1
+    labelSTR ["text"]=f"{STR}"
+
+def DECS_btn():
+    LVL-=1
+    DECS+=1
+    labelDECS ["text"]=f"{DECS}"
+
+def INT_btn():
+    LVL-=1
+    INT+=1
+    labelINT ["text"]=f"{INT}"
 
 def exit_clicked():
     window.destroy()
@@ -19,7 +59,7 @@ def PlayerHP():
     global P
     P = P - 1
     labelP ["text"]=P
-    root.after(1000, P)
+    window.after(1000, P)
  
 def click_button():
     global HP
@@ -56,7 +96,7 @@ window.option_add("*tearOff", FALSE)
 main_menu = Menu()
 player_menu = Menu()
 
-player_menu.add_command(label="Навыки")
+player_menu.add_command(label="Навыки", command=ability_clicked)
 player_menu.add_command(label="Экипировка", command=gear_clicked)
 setings_menu = Menu()
 setings_menu.add_command(label="Новая игра")
